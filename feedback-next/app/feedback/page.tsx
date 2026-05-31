@@ -1,39 +1,29 @@
-'use client';
 
-import { useEffect, useState } from "react";
+
+// import { useEffect, useState } from "react";
 import formSubmit from "../actions/formSubmit";
 import getFeedbacks from "../actions/getFeedbacks";
+import Button from "../component/Button";
 
 type FeedBack = {
-    name: string;
+    fullName: string;
     email: string;
     message: string;
 };
 
-function Feedback() {
+async function Feedback() {
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [message, setMessage] = useState("");
-    const [data, setData] = useState<FeedBack[]>([]);
-
-    async function fetchData()
-    {
-        const feedbacks = await getFeedbacks();
-        setData(feedbacks);
-    }
-    useEffect(()=>{
-        fetchData();
-    },[])
+    const data = await getFeedbacks();
 
     return (
         <>
             <form action={formSubmit}>
                 <label htmlFor="name">Name</label>
                 <input type="text" name="name" id="name"
-                onChange={(e) => setName(e.target.value)}
+                // onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your email"
-                value = {name}/>
+                // value = {name}
+                />
 
                 <br/><br/>
                 
@@ -41,9 +31,9 @@ function Feedback() {
                 <input type="text"
                 name="email" 
                 id="email" 
-                onChange={(e) => setEmail(e.target.value)}
+                // onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                value={email}
+                // value={email}
                 >
                 </input>
 
@@ -55,9 +45,9 @@ function Feedback() {
                 <textarea
                     name="message" 
                     id="message" 
-                    onChange={(e) => setMessage(e.target.value)}
+                    // onChange={(e) => setMessage(e.target.value)}
                     placeholder="Enter message"
-                    value={message}
+                    // value={message}
                     rows={5}
                     cols={50}
                 >
@@ -66,15 +56,14 @@ function Feedback() {
                 <br/>
                 <br/>
 
-                
-                <button type="submit">Submit</button>
+                <Button/>
             </form>
 
             {/* feedback display */}
             {
-                data.map((feedback: FeedBack, idx) => (
+                data.map((feedback: FeedBack, idx:any) => (
                     <div key={idx}>
-                        <p>{feedback.name}</p>
+                        <p>{feedback.fullName}</p>
                         <p>{feedback.email}</p>
                         <p>{feedback.message}</p>
                     </div>
